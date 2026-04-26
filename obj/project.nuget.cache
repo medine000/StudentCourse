@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "/O+M8W5DliQ=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\hp\\source\\repos\\WebApplication10\\WebApplication10\\WebApplication10.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\hp\\.nuget\\packages\\system.configuration.configurationmanager\\10.0.7\\system.configuration.configurationmanager.10.0.7.nupkg.sha512",
+    "C:\\Users\\hp\\.nuget\\packages\\system.data.oledb\\10.0.7\\system.data.oledb.10.0.7.nupkg.sha512",
+    "C:\\Users\\hp\\.nuget\\packages\\system.diagnostics.performancecounter\\10.0.7\\system.diagnostics.performancecounter.10.0.7.nupkg.sha512",
+    "C:\\Users\\hp\\.nuget\\packages\\system.security.cryptography.protecteddata\\10.0.7\\system.security.cryptography.protecteddata.10.0.7.nupkg.sha512"
+  ],
+  "logs": []
+}
