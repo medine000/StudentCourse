@@ -1,8 +1,6 @@
-﻿using System.Diagnostics;
+﻿using System.Data.OleDb;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication10.Models;
-using System.Data.OleDb;
-using System.Collections.Generic;
 
 namespace WebApplication10.Controllers
 {
@@ -12,40 +10,51 @@ namespace WebApplication10.Controllers
 @"Provider=Microsoft.ACE.OLEDB.12.0;
 Data Source=C:\Users\hp\OneDrive\Documents\Student.accdb";
 
-        // 🔥 BURASI VACİBDİR
-        static List<StudentCourse> list = new List<StudentCourse>();
-
         public IActionResult Index()
         {
+            List<StudentCourse> list = new List<StudentCourse>();
+
+            using (OleDbConnection con = new OleDbConnection(connectionString))
+            {
+                con.Open();
+
+                OleDbCommand cmd = new OleDbCommand(
+                    "SELECT * FROM Student", con);
+
+                OleDbDataReader dr = cmd.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    list.Add(new StudentCourse
+                    {
+                        StudentName = dr["StudentName"].ToString(),
+                        CourseName = dr["CourseName"].ToString(),
+                        CurrentCount = 1,
+                        Limit = 0
+                    });
+                }
+            }
+
             return View(list);
         }
 
         [HttpPost]
         public IActionResult Index(string studentName, string courseName)
         {
-            StudentCourse model = new StudentCourse
+            using (OleDbConnection con = new OleDbConnection(connectionString))
             {
-                StudentName = studentName,
-                CourseName = courseName,
-                CurrentCount = 1
-            };
+                con.Open();
 
-            if (courseName == "Csharp")
-                model.Limit = 20;
-            else if (courseName == "Riyaziyyat")
-                model.Limit = 2;
-            else
-                model.Limit = 15;
+                OleDbCommand cmd = new OleDbCommand(
+                    "INSERT INTO Student (StudentName, CourseName) VALUES (?, ?)", con);
 
-            // 🔥 list-ə əlavə edirik
-            list.Add(model);
+                cmd.Parameters.AddWithValue("@p1", studentName);
+                cmd.Parameters.AddWithValue("@p2", courseName);
 
-            return View(list);
-        }
+                cmd.ExecuteNonQuery();
+            }
 
-        public IActionResult Privacy()
-        {
-            return View();
+            return RedirectToAction("Index");
         }
     }
 }
